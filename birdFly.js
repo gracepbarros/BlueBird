@@ -1,9 +1,16 @@
-let cx = document.getElementById("canvas").getContext("2d");
+let canva = document.getElementById("canvas");
+let cx = canva.getContext("2d");
 let img = new Image();
 img.src = "flappy-bird2.png";
-let destX = 363, destY = 375;
 let x = 0, y=0, wing = 0, mirror = 0;
 let t;
+const width = window.innerWidth;
+const height = window.innerHeight;
+let destX = width/2, destY = height/2;
+
+canva.width = width;
+canva.height = height;
+
 img.addEventListener("load",function () {
         cx.drawImage(img, 0, 0, 75, 50, x + destX, y + destY, 75, 50);
         setInterval(birdFly,3000);});
@@ -36,7 +43,7 @@ function birdFly() {
         t = setInterval(function(){
             if (destX >= 725){birdFly();}
             else{
-            cx.clearRect(0, 0, 800, 800);
+            cx.clearRect(0, 0, width, height);
             mirror = 0;
             cx.drawImage(img, wing*75, mirror+0, 75, 50, destX += 10, destY, 75, 50);}
             wing == 7 ? wing=0 : wing += 1;
@@ -46,7 +53,7 @@ function birdFly() {
         t = setInterval(function(){
             if (destX<=0){birdFly();}
             else{
-            cx.clearRect(0, 0, 800, 800);
+            cx.clearRect(0, 0, width, height);
             mirror = 50;
             cx.drawImage(img, wing*75, mirror+0, 75, 50, destX -= 10, destY, 75, 50);}
             wing == 7 ? wing=0 : wing += 1;
@@ -56,7 +63,7 @@ function birdFly() {
         t = setInterval(function(){
             if (destY<0){birdFly();}
             else{
-            cx.clearRect(0, 0, 800, 800);
+            cx.clearRect(0, 0, width, height);
             cx.drawImage(img, wing*75, mirror+0, 75, 50, destX, destY -= 10, 75, 50);}
             wing == 7 ? wing=0 : wing += 1;
             },60);
@@ -65,7 +72,7 @@ function birdFly() {
         t = setInterval(function(){
             if (destY>=750){birdFly();}
             else{
-            cx.clearRect(0, 0, 800, 800);
+            cx.clearRect(0, 0, width, height);
             cx.drawImage(img, wing*75, mirror+0, 75, 50, destX, destY += 10, 75, 50);}
             wing == 7 ? wing=0 : wing += 1;
         },60); 
