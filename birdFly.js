@@ -4,16 +4,34 @@ let img = new Image();
 img.src = "flappy-bird2.png";
 let x = 0, y=0, wing = 0, mirror = 0;
 let t;
-const width = window.innerWidth;
-const height = window.innerHeight;
-let destX = width/2, destY = height/2;
+let width, height;
+let destX, destY;
 
-canva.width = width;
-canva.height = height;
+function resizeCanvas() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+    destX = width / 2;
+    destY = height / 2;
+}
 
-img.addEventListener("load",function () {
-        cx.drawImage(img, 0, 0, 75, 50, x + destX, y + destY, 75, 50);
-        setInterval(birdFly,3000);});
+img.addEventListener("load", function () {
+    resizeCanvas();
+    drawBird();
+    setInterval(birdFly, 3000);
+});
+
+window.addEventListener("resize", function () {
+    resizeCanvas();
+    drawBird();
+});
+
+function drawBird() {
+    ctx.clearRect(0, 0, width, height);
+    ctx.drawImage(img, wing * 75, mirror + 0, 75, 50, destX, destY, 75, 50);
+    wing === 7 ? (wing = 0) : wing++;
+}
 
 function birdFly() {
     let newD = Math.floor(Math.random()*4);
